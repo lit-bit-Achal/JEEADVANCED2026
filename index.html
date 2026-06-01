@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE (Advanced) 2026 - Result Portal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-top: 4px solid #e77e23;
+        }
+        .header-portal {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .header-portal h2 {
+            font-size: 20px;
+            color: #333;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+        }
+        .form-group input:focus {
+            border-color: #34495e;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #2c3e50;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-submit:hover {
+            background-color: #1a252f;
+        }
+        .instruction-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        
+        /* Scorecard Styles */
+        .scorecard-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 25px;
+            display: none;
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .details-table {
+            width: 100%;
+            margin-bottom: 25px;
+            border-collapse: collapse;
+        }
+        .details-table td {
+            padding: 6px 0;
+            font-size: 15px;
+            color: #333;
+        }
+        .details-table td.label {
+            width: 250px;
+        }
+        .details-table td.separator {
+            width: 30px;
+            text-align: center;
+        }
+        .details-table td.value {
+            font-weight: normal;
+        }
+        .result-status {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 20px;
+        }
+        .marks-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .marks-table th, .marks-table td {
+            border: 1px solid #bbb;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .marks-table th {
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+        .marks-table td.subject-name {
+            text-align: center;
+            width: 40%;
+        }
+        .total-row td {
+            font-weight: normal;
+        }
+        .rank-list-btn {
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .rank-list-btn button {
+            background: #eee;
+            border: 1px solid #ccc;
+            padding: 8px 30px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="portal-container">
+        <div class="header-portal">
+            <h2>Result Portal</h2>
+        </div>
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <input type="text" id="roll" placeholder="JEE (Advanced) 2026 Roll Number" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="dob" placeholder="Date of Birth (DD/MM/YYYY)" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="mobile" placeholder="Mobile number" required>
+            </div>
+            <button type="submit" class="btn-submit">Get Result</button>
+        </form>
+        <p class="instruction-text">
+            Please enter your 9 Digit JEE (Advanced) 2026 Roll Number, date of birth in DD/MM/YYYY format, and the phone number that you used while registering for JEE (Advanced).
+        </p>
+    </div>
+
+    <div class="scorecard-container" id="scorecard-container">
+        <span class="close-btn" onclick="resetPortal()">&times;</span>
+        
+        <div class="section-title">Candidate's Details</div>
+        <table class="details-table">
+            <tr>
+                <td class="label">JEE (Adv) Roll No.</td>
+                <td class="separator">:</td>
+                <td class="value" id="res-roll"></td>
+            </tr>
+            <tr>
+                <td class="label">Name</td>
+                <td class="separator">:</td>
+                <td class="value">ACHAL SHARMA</td>
+            </tr>
+            <tr>
+                <td class="label">Date of Birth</td>
+                <td class="separator">:</td>
+                <td class="value" id="res-dob"></td>
+            </tr>
+            <tr>
+                <td class="label">Mobile Number</td>
+                <td class="separator">:</td>
+                <td class="value" id="res-mobile"></td>
+            </tr>
+            <tr>
+                <td class="label">Sr. No.</td>
+                <td class="separator">:</td>
+                <td class="value">R43030102938336</td>
+            </tr>
+        </table>
+
+        <div class="result-status">
+            Marks Secured & Result: <span style="font-weight: bold;">Not Qualified</span>
+        </div>
+
+        <table class="marks-table">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">Subject</th>
+                    <th style="width: 30%;">Paper 1</th>
+                    <th style="width: 30%;">Paper 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="subject-name">Mathematics</td>
+                    <td>43</td>
+                    <td>48</td>
+                </tr>
+                <tr>
+                    <td class="subject-name">Physics</td>
+                    <td>55</td>
+                    <td>31</td>
+                </tr>
+                <tr>
+                    <td class="subject-name">Chemistry</td>
+                    <td>-2</td>
+                    <td>5</td>
+                </tr>
+                <tr class="total-row">
+                    <td class="subject-name">Total Marks</td>
+                    <td colspan="2" style="text-align: center; padding-left: 25%;">180</td>
+                </tr>
+                <tr class="total-row">
+                    <td class="subject-name">Positive Marks</td>
+                    <td colspan="2" style="text-align: center; padding-left: 25%;">188</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="rank-list-btn">
+            <button type="button">Rank List</button>
+            <button type="button">Rank</button>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const rollInput = document.getElementById('roll').value.trim();
+            const dobInput = document.getElementById('dob').value.trim();
+            const mobileInput = document.getElementById('mobile').value.trim();
+
+            const targetRoll = "264006331";
+            const targetDob = "29/06/2007";
+            const targetMobile = "9630866707";
+
+            if (rollInput === targetRoll && dobInput === targetDob && mobileInput === targetMobile) {
+                document.getElementById('res-roll').innerText = targetRoll;
+                document.getElementById('res-dob').innerText = targetDob;
+                document.getElementById('res-mobile').innerText = targetMobile;
+
+                document.getElementById('portal-container').style.display = 'none';
+                document.getElementById('scorecard-container').style.display = 'block';
+            } else {
+                alert("Invalid Credentials. Please check the Roll Number, DOB, and Mobile Number.");
+            }
+        }
+
+        function resetPortal() {
+            document.getElementById('login-form').reset();
+            document.getElementById('scorecard-container').style.display = 'none';
+            document.getElementById('portal-container').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
